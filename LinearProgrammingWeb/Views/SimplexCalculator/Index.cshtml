@@ -1,0 +1,17 @@
+@model SimplexMethodModel
+
+@{
+    ViewBag.Title = "";
+    Layout = "_Layout";
+}
+
+<h1 class="text-center mb-4">
+    Simplex Calculator
+</h1>
+
+<partial name="SimplexTableInputViaTextAreaPartial"/>
+
+@if(Model is not null)
+{
+    <partial name="SimplexResultPartial" />
+}

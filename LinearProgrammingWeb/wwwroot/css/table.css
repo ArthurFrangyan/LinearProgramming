@@ -1,0 +1,26 @@
+
+textarea.auto-resize {
+    overflow: hidden; /* hide scrollbar */
+    resize: none;     /* prevent manual resizing */
+}
+
+.table-container {
+    overflow-x: auto; /* allow horizontal scroll if table grows too wide */
+}
+
+.table-container table {
+    width: 100%;
+    table-layout: fixed;
+    min-width: max-content;
+}
+
+.table-container th,
+.table-container td {
+    padding: 8px;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+

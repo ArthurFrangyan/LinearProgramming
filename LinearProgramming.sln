@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplexMethod", "SimplexMethod\SimplexMethod.csproj", "{7712EABC-30FF-4A72-82AA-514BFDD6DD9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplex.Console", "Simplex.Console\Simplex.Console.csproj", "{1C8A9D2A-5A88-49C6-B9D7-4466E004475B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearProgrammingWeb", "LinearProgrammingWeb\LinearProgrammingWeb.csproj", "{1954F7C1-DC26-4795-884D-EF3D78C01E26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7712EABC-30FF-4A72-82AA-514BFDD6DD9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7712EABC-30FF-4A72-82AA-514BFDD6DD9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7712EABC-30FF-4A72-82AA-514BFDD6DD9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7712EABC-30FF-4A72-82AA-514BFDD6DD9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8A9D2A-5A88-49C6-B9D7-4466E004475B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8A9D2A-5A88-49C6-B9D7-4466E004475B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8A9D2A-5A88-49C6-B9D7-4466E004475B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8A9D2A-5A88-49C6-B9D7-4466E004475B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1954F7C1-DC26-4795-884D-EF3D78C01E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1954F7C1-DC26-4795-884D-EF3D78C01E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1954F7C1-DC26-4795-884D-EF3D78C01E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1954F7C1-DC26-4795-884D-EF3D78C01E26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

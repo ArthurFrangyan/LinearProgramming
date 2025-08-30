@@ -1,0 +1,24 @@
+@model SimplexMethodModel
+@{
+    var tablePlaceholder = @"-10 1 1 1 0 0 0 0
+-6  1 0 0 1 0 0 0
+-7  1 0 0 0 1 0 0
+ 1  2 2 0 0 0 1 1
+ 1  2 2 0 0 0 0 1";
+}
+<form asp-action="Calculate" method="post" class="p-4 border rounded shadow-sm bg-light">
+    <div class="mb-3">
+        <label asp-for="TableString" class="form-label">Enter Simplex Table</label>
+        <textarea asp-for="TableString" class="form-control auto-resize font-monospace" rows="1" 
+                  placeholder="@tablePlaceholder"></textarea>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary">Calculate</button>
+        <div 
+            style="cursor: pointer;" 
+            title="Use a comma (,) or a space ( ) to separate columns, and use a new line (Enter) to separate rows.">
+            <i class="bi bi-info-circle"></i>
+        </div>
+    </div>
+</form>
+

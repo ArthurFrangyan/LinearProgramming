@@ -1,0 +1,43 @@
+﻿@using SimplexMethod
+
+<h2 class="text-center mt-3 mb-2">
+    Result
+</h2>
+
+<div class="table-container">
+    @foreach (Table table in Model.CalculationResult.Tables)
+    {
+        <p>
+            <table class="table table-bordered">
+                <thead>
+                    @for (var j = 0; j < table.VariableColumns; j++)
+                    {
+                        <th>x@(j+1)</th>
+                    }
+                    @{
+                        <th>b</th>
+                    }
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < table.CostRow; i++)
+                    {
+                        <tr>
+                            @for (var j = 0; j < table.Columns; j++)
+                            {
+                                <td>@Rational.FromDouble(table[i, j])</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        @for (var j = 0; j < table.Columns; j++)
+                        {
+                            <td>@Rational.FromDouble(table[table.CostRow, j])</td>
+                        }
+                    </tr>
+                </tfoot>
+            </table>
+        </p>
+    }
+</div>
