@@ -8,17 +8,18 @@ textarea.auto-resize {
     overflow-x: auto; /* allow horizontal scroll if table grows too wide */
 }
 
-.table-container table {
+.dynamic-table {
     width: 100%;
     table-layout: fixed;
     min-width: max-content;
 }
 
-.table-container th,
-.table-container td {
+.dynamic-table th,
+.dynamic-table td {
     padding: 8px;
     overflow: visible;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
     text-align: center;
     vertical-align: middle;
 }

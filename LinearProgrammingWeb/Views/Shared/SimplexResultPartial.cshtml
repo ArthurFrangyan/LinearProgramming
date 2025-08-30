@@ -8,7 +8,7 @@
     @foreach (Table table in Model.CalculationResult.Tables)
     {
         <p>
-            <table class="table table-bordered">
+            <table class="dynamic-table table table-bordered">
                 <thead>
                     @for (var j = 0; j < table.VariableColumns; j++)
                     {
