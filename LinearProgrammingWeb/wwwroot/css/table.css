@@ -23,5 +23,8 @@ textarea.auto-resize {
     text-align: center;
     vertical-align: middle;
 }
-
+.sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
 
