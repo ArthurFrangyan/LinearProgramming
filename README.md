@@ -8,7 +8,7 @@ This repository contains:
 - `Simplex.Console`: a console app for quick local calculations.
 - `LinearProgrammingWeb`: a simple ASP.NET Core MVC UI for sharing and viewing steps in the browser.
 
-**Live demo** (may change over time): `https://linearprogramming-endq.onrender.com/`
+**Live demo** (may change over time): https://linearprogramming-endq.onrender.com/
 
 ## Why This Exists
 
