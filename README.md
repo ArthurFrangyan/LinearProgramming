@@ -15,7 +15,7 @@ This project started as a small console tool because doing simplex by hand is sl
 
 Online solvers can produce the same optimal value, but the **step-by-step tableaus** often don't match what you are trying to follow in class or in a book. A lot of simplex material (and some tools) are built around a "maximize" canonical form, while minimization is handled by converting `min z` into `max -z` or by switching the cost-row convention. Those transformations preserve the optimum, but they can change the tableau you iterate on, which changes the pivot path and intermediate tableaus.
 
-We needed the steps for the convention we were using, so the tool was extracted into a library and wrapped in a small web app (Docker-friendly) instead of sharing platform-specific binaries.
+We built it to get the steps for the convention we were using. Later, when we wanted to share it and reuse it, the core logic was extracted into the `SimplexMethod` library and wrapped in a small web app (with a Dockerfile for simple hosting).
 
 ## Requirements
 
