@@ -1,29 +1,28 @@
 # LinearProgramming
 
-A step-by-step Simplex **tableau** calculator, built around the cost-row/tableau convention we needed for minimization-style problems.
+Simplex **tableau** calculator that shows the work, not just the answer.
 
-This repository contains:
+At the core is `SimplexMethod` (a `net9.0` library) which takes an initial tableau, performs pivoting, and returns every intermediate tableau. On top of that are two small front-ends:
 
-- `SimplexMethod`: a small .NET library that pivots an initial tableau and keeps every intermediate tableau.
-- `Simplex.Console`: a console app for quick local calculations.
-- `LinearProgrammingWeb`: a simple ASP.NET Core MVC UI for sharing and viewing steps in the browser.
+- `Simplex.Console`: quick local usage from the terminal
+- `LinearProgrammingWeb`: a minimal ASP.NET Core MVC UI to share and view the steps
 
-**Live demo** (may change over time): https://linearprogramming-endq.onrender.com/
+Live demo (may change over time): https://linearprogramming-endq.onrender.com/
 
 ## Why This Exists
 
-The very first version was written in a few hours as a personal tool: manual simplex calculations get long, and small arithmetic mistakes are easy to make.
+This project started as a small console tool because doing simplex by hand is slow and error-prone when the tables get big.
 
-You might ask: why not use an online simplex calculator? The issue was not the final optimum, it was the **steps**. A lot of simplex material (and some online solvers) are written around the standard/canonical maximization form, and minimization is often handled by converting `min z` into `max -z` or by using a different cost-row convention. When you change conventions, the optimum is preserved, but the **tableau you iterate on changes**, so the pivot sequence and intermediate tableaus can look different.
+Online solvers can produce the same optimal value, but the **step-by-step tableaus** often don't match what you are trying to follow in class or in a book. A lot of simplex material (and some tools) are built around a "maximize" canonical form, while minimization is handled by converting `min z` into `max -z` or by switching the cost-row convention. Those transformations preserve the optimum, but they can change the tableau you iterate on, which changes the pivot path and intermediate tableaus.
 
-This project was built to reproduce the step-by-step process for the minimization/tableau convention we were using, and later turned into a shareable web app (Docker-friendly) instead of passing around binaries.
+We needed the steps for the convention we were using, so the tool was extracted into a library and wrapped in a small web app (Docker-friendly) instead of sharing platform-specific binaries.
 
 ## Requirements
 
 - .NET SDK `9.x`
-- Optional: Docker (for containerized hosting)
+- Optional: Docker
 
-## Run It
+## Run
 
 Web UI:
 
@@ -46,23 +45,25 @@ docker run --rm -p 8080:80 linearprogramming
 
 Open `http://localhost:8080/`.
 
-## Input: Tableau (Not Equations)
+## Input Format (Tableau)
 
-This project is tableau-first. It does not turn constraints like `Ax <= b` into a tableau for you. You provide the **initial simplex tableau** directly (including any slack/surplus/artificial columns you want to use).
+This project is tableau-first. It does not convert equations/inequalities into a tableau for you. You provide the **initial simplex tableau** directly, including any slack/surplus/artificial columns you want.
 
-How parsing works:
+Parsing rules:
 
-- Newline separates rows.
-- Space and/or comma separates columns.
-- `{` and `}` are ignored, so `{ 1, 2, 3 }` is accepted.
-- Short rows are padded with trailing zeros to match the widest row.
-- Numbers are parsed using the current runtime culture (`double.TryParse`). Commas are always treated as separators, so decimal-comma input like `1,5` is not supported. If you need decimals, prefer `.` and run under a culture that parses `.` as a decimal separator.
+- One row per line
+- Columns separated by spaces and/or commas
+- Optional `{` `}` are ignored (so `{ 1, 2, 3 }` is accepted)
+- Short rows are padded with trailing zeros to match the widest row
+- Numbers use `double.TryParse` with the current runtime culture
+  - Commas are always treated as separators, so decimal-comma like `1,5` is not supported
+  - If you need decimals, prefer `.` and run under a culture that parses `.` as the decimal separator
 
-Expected shape (as implemented today):
+Table shape the library assumes:
 
-- Last column is RHS `b`.
-- Last row is the cost row (objective row used to decide whether to keep pivoting).
-- All columns except `b` are treated as variable columns (`x1..xn`), including any slack/artificial columns you included.
+- Last column is RHS `b`
+- Last row is the cost row
+- Every column except `b` is treated as a variable column (`x1..xn`), including any slack/artificial columns you included
 
 Example (same sample as the web UI placeholder):
 
@@ -74,20 +75,20 @@ Example (same sample as the web UI placeholder):
  1  2 2 0 0 0 0 1
 ```
 
-Console input detail: paste one row per line and submit an empty line to finish.
+Console input note: paste one row per line, then submit an empty line to finish input.
 
-## How The Iterations Work
+## What The Library Does
 
-The library runs simplex iterations on the tableau you provide and stores each table:
+Given the tableau you provide, the solver:
 
-- Stop when all entries in the cost row (excluding `b`) are `<= 0` (tolerance `1e-10`).
-- Choose the entering column as the variable column with the largest cost-row value (must be `> 0`).
-- Choose the leaving row using the minimum ratio test over rows with a positive pivot column entry: `b_i / a_{i,pivotCol}`.
-- Normalize the pivot row and apply row reduction to every other row.
+- Stops when all cost-row entries (excluding `b`) are `<= 0` (tolerance `1e-10`)
+- Picks the entering column as the largest cost-row value (must be `> 0`)
+- Picks the leaving row via the minimum ratio test over rows with a positive pivot-column entry: `b_i / a_{i,pivotCol}`
+- Normalizes the pivot row and performs row reduction on every other row
 
-If no valid pivot exists, the result is reported as "Solution not found". A hard cap of `100` attempts is applied to avoid infinite loops (the current check trips after the 101st pivot).
+If no valid pivot exists, the result state is "Solution not found". To avoid infinite loops, there is a max-attempts guard of `100` (the current check trips after the 101st pivot).
 
-## Using The Library
+## Library Usage
 
 ```csharp
 using SimplexMethod;
@@ -99,10 +100,9 @@ var result = Simplex.Calculate(table);
 // result.State indicates success or failure
 ```
 
-The web UI renders values as reduced `Rational` strings for readability, while the algorithm runs on `double` internally.
+The web UI renders values as reduced `Rational` strings for readability; calculations run on `double`.
 
 ## Limitations
 
-- Requires a valid initial tableau (including any slack/surplus/artificial columns you need).
-- Does not implement two-phase simplex / Big-M to automatically find an initial feasible basis.
-- Uses floating-point arithmetic (`double`) for calculations.
+- Requires a valid starting tableau/basis (no two-phase simplex / Big-M helper)
+- Floating-point arithmetic (`double`)
